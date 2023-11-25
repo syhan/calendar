@@ -17,13 +17,20 @@ for month in {1..12}; do
             mark_text=$(echo $bookmark | cut -d '|' -f3)
             id=$(echo $bookmark | cut -d '|' -f4)
 
+            cal=$(sqlite3 bookmarks.db "SELECT lunar, solar_term FROM calendar WHERE solar = '$year-$month-$day'")
+
+            lunar=$(echo $cal | cut -d '|' -f1)
+            solar_term=$(echo $cal | cut -d '|' -f2)
+            [ ! -z $solar_term ] && solar_term="·"$solar_term
+
             echo -n | tee "days/$year-$month-$day.tex" << EOF
-\title{\date[d=$day,m=$month,y=$year][year:cn-y,年,month:cn,day:cn,日,,weekday]}
-$mark_text\footnote{\bi{$book_name, $author}}
+\title{\date[d=$day,m=$month,y=$year][year:cn-y,年,month:cn,day:cn,日,·,weekday]·$lunar $solar_term}
+$mark_text\footnote{\bi{$book_name} \regular{$author}}
 
 EOF
 
             cat days/$year-$month-$day.tex >> days.tex
+            # avoid duplication
             sqlite3 bookmarks.db "DELETE FROM bookmarks WHERE ID = '$id'"
         fi
     done
@@ -34,3 +41,4 @@ context calendar.tex --result=calendar-$year
 # refill the sqlite db
 rm -f bookmarks.db
 sqlite3 bookmarks.db < bookmarks.sql
+sqlite3 bookmarks.db ".import calendar-2024.csv calendar --csv"
