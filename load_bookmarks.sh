@@ -14,6 +14,12 @@ CREATE TABLE bookmarks (
   mark_text TEXT
 );
 
+CREATE TABLE calendar (
+    solar TEXT PRIMARY KEY,
+    lunar TEXT,
+    solar_term TEXT
+);
+
 EOF
 
 curl 'https://weread.qq.com/web/book/bookmarklist' \
