@@ -2,3 +2,4 @@
 *.tuc
 test.tex
 test.pdf
+.DS_Store
