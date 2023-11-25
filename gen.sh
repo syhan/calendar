@@ -18,8 +18,8 @@ for month in {1..12}; do
             id=$(echo $bookmark | cut -d '|' -f4)
 
             echo -n | tee "days/$year-$month-$day.tex" << EOF
-\title{\date[d=$day,m=$month,y=$year][year:cn-a,年,month:cn,day:cn,日,,weekday]}
-$mark_text\footnote{$book_name, $author}
+\title{\date[d=$day,m=$month,y=$year][year:cn-y,年,month:cn,day:cn,日,,weekday]}
+$mark_text\footnote{\bi{$book_name, $author}}
 
 EOF
 
@@ -29,7 +29,7 @@ EOF
     done
 done
 
-context calendar.tex
+context calendar.tex --result=calendar-$year
 
 # refill the sqlite db
 rm -f bookmarks.db
