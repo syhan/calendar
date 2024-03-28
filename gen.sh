@@ -7,7 +7,7 @@ for month in {1..12}; do
 
     days_in_month=$(cal -d "$year-$month-01" | awk 'NF {DAYS = $NF}; END {print DAYS}')
 
-  for ((day=1; day<=$days_in_month; day++)); do
+    for ((day=1; day<=$days_in_month; day++)); do
         # use `date`` to validate
         if date -j -f "%Y-%m-%d" "$year-$month-$day" > /dev/null 2>&1; then
             bookmark=$(sqlite3 bookmarks.db "SELECT a.name, a.author, b.mark_text, b.id FROM books AS a INNER JOIN bookmarks AS b ON a.id = b.book_id AND LENGTH(b.mark_text) < 430 ORDER BY RANDOM() LIMIT 1")

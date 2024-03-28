@@ -1,0 +1,8 @@
+\setuppapersize [XY][A5]
+\setuppaper     [topspace=5mm,backspace=5mm,dx=1mm,dy=1mm,nx=1,ny=5]
+\setuplayout    [page] [topspace=5mm,backspace=5mm]
+\setuplayout    [page] [location=middle,marking=on]
+\setuparranging [XY]
+\showframe
+
+\starttext \dorecurse{30}{test \recurselevel \page} \stoptext
